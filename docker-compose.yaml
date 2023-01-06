@@ -1,0 +1,28 @@
+version: '3'
+
+services: 
+  mainapp: 
+    build:
+      context: ./
+    container_name: nodeserver
+    hostname: nodeserver
+    ports:
+      - "3000:3000"
+    networks:
+      - app-net
+
+  ngignxserver:
+    build:
+      context: ./nginx
+    container_name: nginxcont
+    hostname: nginxcont
+    ports:
+      - "80:80"
+    networks:
+      - app-net
+    depends_on:
+      - mainapp
+
+networks:
+  app-net:
+    external: true
